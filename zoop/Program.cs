@@ -20,6 +20,11 @@ namespace zoop
             return "bye ...";
         }
 
+        public string ShowWhatDoYouWant(String cmd)
+        {
+            return $"The Zoo caretaker does not understand '${cmd}'.";
+        }
+
         public void CloseApp()
         {
             Console.WriteLine(ShowGoodBye());
@@ -40,14 +45,17 @@ namespace zoop
 
                 switch (cmd)
                 {
+                    // close command
                     case "close": 
                     case "quit":
-                    default:
-                        {
                             zoo.CloseApp();
                             break;
-                        }
-                        
+
+                    // unknown command
+                    default:
+                        zoo.ShowWhatDoYouWant(cmd);
+                        break;
+
                 }
             }
         }
