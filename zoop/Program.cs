@@ -113,10 +113,46 @@ namespace zoop
             }
         }
 
+        public void ShowStatus()
+        {
+            int numberOfPinguins = 0;
+            if (IsPenguinOneAlive() ) numberOfPinguins++;
+            if (IsPenguinTwoAlive()) numberOfPinguins++;
+            if (IsPenguinThreeAlive()) numberOfPinguins++;
+
+            string penguinMsg = "";
+
+            switch(numberOfPinguins)
+            {
+                case 3:
+                    penguinMsg = "Three penguins"; break;
+                case 2:
+                    penguinMsg = "Two penguins"; break;
+                case 1:
+                    penguinMsg = "One penguin"; break;
+                case 0:
+                    penguinMsg = "No penguins"; break;
+            }
+
+            Say(penguinMsg);
+        }
+
         public int GetNumber(int from, int to)
         {
             var rand = new Random();
             return rand.Next(from, to);
+        }
+
+        /**
+         * Each day, the animals consume energy
+         */
+        public void LiveALife()
+        {
+            int energyUsedForADay = 30;
+
+            penguinOneEngergy -= energyUsedForADay;
+            penguinTwoEngergy -= energyUsedForADay;
+            penguinThreeEngergy -= energyUsedForADay;
         }
 
         static void Main(string[] args)
@@ -134,13 +170,19 @@ namespace zoop
                 switch (cmd)
                 {
                     // close command
-                    case "close": case "quit":
+                    case "close": case "quit": case "exit":
                         zoo.CloseApp();
                         break;
 
                     // feed penguin command
                     case "feed penguin":
                         zoo.FeedPenguin();
+                        break;
+
+                    // new day command
+                    case "new day":
+                        zoo.LiveALife();
+                        zoo.ShowStatus();
                         break;
 
                     // unknown command
