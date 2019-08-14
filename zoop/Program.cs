@@ -33,22 +33,37 @@ namespace zoop
             Console.WriteLine(msg);
         }
 
+        public bool IsPenguinOneAlive()
+        {
+            return this.penguinOneEngergy > 0;
+        }
+
+        public bool IsPenguinTwoAlive()
+        {
+            return this.penguinTwoEngergy > 0;
+        }
+
+        public bool IsPenguinThreeAlive()
+        {
+            return this.penguinThreeEngergy > 0;
+        }
+
         public void FeedPenguinOne(int energy)
         {
             this.penguinOneEngergy += energy;
-            Say("Penguin 1 feeded.");
+            Say("Penguin 1 snatches a fish.");
         }
 
         public void FeedPenguinTwo(int energy)
         {
             this.penguinTwoEngergy += energy;
-            Say("Penguin 2 feeded.");
+            Say("Penguin 2 snatches a fish.");
         }
 
         public void FeedPenguinThree(int energy)
         {
             this.penguinThreeEngergy += energy;
-            Say("Penguin 3 feeded.");
+            Say("Penguin 3 snatches a fish.");
         }
 
         public void ShowNoPenguinFeeded()
@@ -85,9 +100,15 @@ namespace zoop
 
             switch(penguinNumber)
             {
-                case 1: FeedPenguinOne(fish); break;
-                case 2: FeedPenguinTwo(fish); break;
-                case 3: FeedPenguinThree(fish); break;
+                case 1:
+                    if(IsPenguinOneAlive() ) FeedPenguinOne(fish); break;
+
+                case 2:
+                    if (IsPenguinTwoAlive()) FeedPenguinTwo(fish); break;
+
+                case 3:
+                    if (IsPenguinThreeAlive()) FeedPenguinThree(fish); break;
+
                 default: ShowNoPenguinFeeded(); break;
             }
         }
@@ -113,8 +134,7 @@ namespace zoop
                 switch (cmd)
                 {
                     // close command
-                    case "close": 
-                    case "quit":
+                    case "close": case "quit":
                         zoo.CloseApp();
                         break;
 
