@@ -8,11 +8,14 @@ namespace zoop
         int penguinTwoEngergy;
         int penguinThreeEngergy;
 
+        int polarBearEnergy;
+
         public Program()
         {
             penguinOneEngergy = 100;
             penguinTwoEngergy = 100;
             penguinThreeEngergy = 100;
+            polarBearEnergy = 1000;
         }
 
         public void ShowWelcome()
@@ -48,6 +51,11 @@ namespace zoop
             return this.penguinThreeEngergy > 0;
         }
 
+        public bool IsPolarBearAlive()
+        {
+            return this.polarBearEnergy > 0;
+        }
+
         public void FeedPenguinOne(int energy)
         {
             this.penguinOneEngergy += energy;
@@ -64,6 +72,63 @@ namespace zoop
         {
             this.penguinThreeEngergy += energy;
             Say("Penguin 3 snatches a fish.");
+        }
+
+        public void FeedPolarBear(int energy)
+        {
+            this.polarBearEnergy += energy;
+            Say("Polar bear snatches a fish.");
+        }
+
+        public void PolarBearHuntsPenguinOne()
+        {
+            this.polarBearEnergy += this.penguinOneEngergy;
+            this.penguinOneEngergy = 0;
+
+            Say("The polar bear has eaten a penguin!");
+        }
+
+        public void PolarBearHuntsPenguinTwo()
+        {
+            this.polarBearEnergy += this.penguinTwoEngergy;
+            this.penguinTwoEngergy = 0;
+
+            Say("The polar bear has eaten a penguin!");
+        }
+
+        public void PolarBearHuntsPenguinThree()
+        {
+            this.polarBearEnergy += this.penguinThreeEngergy;
+            this.penguinThreeEngergy = 0;
+
+            Say("The polar bear has eaten a penguin!");
+        }
+
+        /**
+         * Avoid starvation, try to catch a penguin
+         */
+        public void PolarBearHunts()
+        {
+            int penguinNumber = GetNumber(1, 3);
+
+            switch (penguinNumber)
+            {
+                case 1:
+                    if (IsPenguinOneAlive()) PolarBearHuntsPenguinOne(); break;
+
+                case 2:
+                    if (IsPenguinTwoAlive()) PolarBearHuntsPenguinTwo(); break;
+
+                case 3:
+                    if (IsPenguinThreeAlive()) PolarBearHuntsPenguinThree(); break;
+
+                default: ShowNoPenguinToHunt(); break;
+            }
+        }
+
+        public void ShowNoPenguinToHunt()
+        {
+            Say("There is no penguin left to hunt for the polar bear. You better be careful!");
         }
 
         public void ShowNoPenguinFeeded()
@@ -143,16 +208,32 @@ namespace zoop
             return rand.Next(from, to);
         }
 
+        public bool IsPolarBearStarving()
+        {
+            int starvationEngergyThreshold = 150;
+
+            return this.polarBearEnergy <= starvationEngergyThreshold;
+        }
+
         /**
          * Each day, the animals consume energy
          */
         public void LiveALife()
         {
-            int energyUsedForADay = 30;
+            int penguinEnergyUsedForADay = 30;
+            int polarBearEngergyUsedForADay = 300;
+            
 
-            penguinOneEngergy -= energyUsedForADay;
-            penguinTwoEngergy -= energyUsedForADay;
-            penguinThreeEngergy -= energyUsedForADay;
+            this.penguinOneEngergy -= penguinEnergyUsedForADay;
+            this.penguinTwoEngergy -= penguinEnergyUsedForADay;
+            this.penguinThreeEngergy -= penguinEnergyUsedForADay;
+
+            this.polarBearEnergy -= polarBearEngergyUsedForADay;
+
+
+            if (IsPolarBearStarving()) PolarBearHunts();
+
+            Say(" *** A new day is comming. ***");
         }
 
         static void Main(string[] args)
