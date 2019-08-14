@@ -5,29 +5,39 @@ namespace zoop
     public class Program
     {
 
-        public string ShowWelcome()
+        public void ShowWelcome()
         {
             string msg =  " *** WELCOME at the ***\n"
                 + "three PENGUINS\n" 
                 + "and a POLARBEAR\n"
                 + "ZOO";
 
-            return msg;
+            Say(msg);
         }
 
-        public string ShowGoodBye()
+        /**
+         * Output text to the user
+         */
+        public static void Say(String msg)
         {
-            return "bye ...";
+            Console.WriteLine(msg);
         }
 
-        public string ShowWhatDoYouWant(String cmd)
+        public void ShowGoodBye()
         {
-            return $"The Zoo caretaker does not understand '${cmd}'.";
+            Say("bye ...");
+        }
+
+        public void ShowWhatDoYouWant(String cmd)
+        {
+            string msg = $"The Zoo caretaker does not understand '{cmd}'.";
+
+            Say(msg);
         }
 
         public void CloseApp()
         {
-            Console.WriteLine(ShowGoodBye());
+            ShowGoodBye();
             Environment.Exit(0);
         }
 
@@ -36,7 +46,7 @@ namespace zoop
             Program zoo = new Program();
 
             // Start with message
-            Console.WriteLine(zoo.ShowWelcome());
+            zoo.ShowWelcome();
 
             // listen for commands
             while(true)
