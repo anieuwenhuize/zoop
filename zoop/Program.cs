@@ -32,9 +32,9 @@ namespace zoop
             string msg =  " ***  WELCOME at the  ***\n"
                         + "   *  three PENGUINS  *\n" 
                         + "   *  and a POLARBEAR *\n"
-                        + "   *      ZOO         *"
+                        + "   *      ZOO         *\n"
                         + ""
-                        + " This week, you will be the Zoo caretaker";
+                        + " This week, YOU will be the ZOO caretaker";
 
             Say(msg);
         }
@@ -44,7 +44,7 @@ namespace zoop
             string msg = "You must feed the animals to keep up the zoo.\n"
                 + "Use 'new day' to advance to the next day\n"
                 + "Use 'feed penguin' to throw a fish to the penguins\n"
-                + "Take care that all penguins are fed\n"
+                + "Take care that all penguins are fed each day\n"
                 + "Oh, and dont forget the polar bear.";
 
             Say(msg);
@@ -145,7 +145,7 @@ namespace zoop
 + "-----------:shyys+-`                                        `.:/oso+/:------------------------------\n"
 + "---------:sh+.```                                                `-+ossssooo++++sy+::---------------\n"
 + "--------/ho.`                                                          ```../ooo/-::++/+/:----------\n"
-+ "-----:+/:-`                                                                `ho::.   .+`.:oso+:------\n"
++ "-----:+/:-`                WELL DONE!                                      `ho::.   .+`.:oso+:------\n"
 + "----/s:`                                                                    ./++.    `    `.:/++----\n"
 + "----s./`             ``                                                      `             `  +mdo--\n"
 + "--.od/+             `````                                                   ``                -ysd:-\n"
@@ -298,14 +298,19 @@ namespace zoop
             return allPenguinsAreAlive && polarBearIsAlive;
         }
 
+        public bool AreThereAnyDaysLeft()
+        {
+            return this.numberOfDaysLeft > 0;
+        }
+
         public bool IsGameWon()
         {
-            return this.numberOfDaysLeft == 0 && AllAnimalsAreAlive();
+            return ! AreThereAnyDaysLeft() && AllAnimalsAreAlive();
         }
 
         public bool IsGameOver()
         {
-            return this.numberOfDaysLeft == 0 && ! AllAnimalsAreAlive();
+            return !( AreThereAnyDaysLeft() || AllAnimalsAreAlive());
         }
 
         /**
@@ -351,7 +356,7 @@ namespace zoop
             zoo.ShowWelcome();
 
             // listen for commands
-            while(true)
+            while(true && zoo.AreThereAnyDaysLeft())
             {
                 string cmd = Console.ReadLine();
 
