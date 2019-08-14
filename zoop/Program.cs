@@ -4,6 +4,8 @@ namespace zoop
 {
     public class Program
     {
+        private int numberOfDaysLeft;
+
         private int penguinOneEngergy;
         private int penguinTwoEngergy;
         private int penguinThreeEngergy;
@@ -11,12 +13,18 @@ namespace zoop
         private int polarBearEnergy;
         private const int polarBearStarvationEngergyThreshold = 150;
 
+        private Random rand;
+
         public Program()
         {
+            numberOfDaysLeft = 7;
+
             penguinOneEngergy = 100;
             penguinTwoEngergy = 100;
             penguinThreeEngergy = 100;
             polarBearEnergy = 1000;
+
+            this.rand = new Random();
         }
 
         public void ShowWelcome()
@@ -24,17 +32,19 @@ namespace zoop
             string msg =  " ***  WELCOME at the  ***\n"
                         + "   *  three PENGUINS  *\n" 
                         + "   *  and a POLARBEAR *\n"
-                        + "   *      ZOO         *";
+                        + "   *      ZOO         *"
+                        + ""
+                        + " This week, you will be the Zoo caretaker";
 
             Say(msg);
         }
 
         public void ShowInstructions()
         {
-            string msg = "You must feed the animals to keepup the zoo.\n"
-                + "Use 'new day' to advance to the next day"
-                + "Use 'feed penguin' to throw a fish to the penguins"
-                + "Take care that all penguins are fed"
+            string msg = "You must feed the animals to keep up the zoo.\n"
+                + "Use 'new day' to advance to the next day\n"
+                + "Use 'feed penguin' to throw a fish to the penguins\n"
+                + "Take care that all penguins are fed\n"
                 + "Oh, and dont forget the polar bear.";
 
             Say(msg);
@@ -114,6 +124,48 @@ namespace zoop
             this.penguinThreeEngergy = 0;
 
             Say("The polar bear has eaten a penguin!");
+        }
+
+        public void ShowFullScreen()
+        {
+            string msg = "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
++ ":::::::::::::::::::::::::::::::::::::::://::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
++ ":::::::::::::::::::::::::::::::::::::::yNmmo:::::::::::::/::::::::::::::::::::::::::::::::::::::::::\n"
++ "::::::::::::::::::::::::::::::::::::::yMMNMyoso::::::::+mmdo::::::::::::::::::::::::::::::::::::::::\n"
++ ":::::::::::odmh/::::::::::::::::::::/dMMMMdy++/:::::::sNMNNs+oo/::::::::::::::::::::::::::::::::::::\n"
++ "::::::::++/yNMMmo///:::::::::::::::oNMMMMd.o::::::::omMMMMhs+oo/::::::::::::::::::::::::::::::::::::\n"
++ ":::::::/osddmdNMMNNNmhs::::::::::::NMMMMMy -+::::::yMMMMMo-o::::::::::::::::::::::::::::::::::::::::\n"
++ "+/////:::/+/+:-yNMMNs:::::::::::::oMMMMMMMy:/y+:::+NMMMMM/`+/:::::::::::::::::::::::::::::::::::::::\n"
++ "/oyhy+:::::+s`  :mMMNy:::::::::::-sMMMMMm+/:-yo:::hMMMMMNm:-o-::::::::::::::::::::::::::::::::::::::\n"
++ "+//::-----om.    :NMMMo-----------yMMMMMN:  /+---:mMMMMM/---+---------------------------------------\n"
++ "----------+s.    `hMMMy----------:dMMMMMN- :o:---+MMMMMM: `o:---------------------------------------\n"
++ "-----------/+     oMMMy-::/+++osydNMNNMNo:sy+///sNMMMMNs.:+/----------------------------------------\n"
++ "------------/+-`./dMMMmhys+//::-//:---:o++osossdNmdhdmmysho+:---------------------------------------\n"
++ "-------------:yhhNNho+o/``               ``    ....``..--:/osso+:-----------------------------------\n"
++ "-----------:shyys+-`                                        `.:/oso+/:------------------------------\n"
++ "---------:sh+.```                                                `-+ossssooo++++sy+::---------------\n"
++ "--------/ho.`                                                          ```../ooo/-::++/+/:----------\n"
++ "-----:+/:-`                                                                `ho::.   .+`.:oso+:------\n"
++ "----/s:`                                                                    ./++.    `    `.:/++----\n"
++ "----s./`             ``                                                      `             `  +mdo--\n"
++ "--.od/+             `````                                                   ``                -ysd:-\n"
++ "...omh:             `````                                                    `             -:::/+h:.\n"
++ "....:ss `            ``./`               -                                          `.-::::oossys:..\n"
++ "...../m-``            ``./.              /-`                        ```` ````...////+oo+///:::-.....\n"
++ ".....-sm/.`        .`    ./`             ./:                     //++sysss+::+sss//-................\n"
++ ".......mms-``      ``    `:-`             `s/`              `o-`/Ny+://:-...........................\n"
++ "......+mo+y+.``       ``-+s+-             `/o.             -ss./m+..................................\n"
++ "....-+s:..-sy+.``    ```./hd-```         `-hmh`            -h/-+:...................................\n"
++ "..:+o-....-+hMmy-`    ```.:ds/:-......:++sys+m-`            -do.....................................\n"
++ ":ho-.....-sMmdsoho.    ```.yMNNmdhhoo+/:.....ss:.`           .yo....................................\n"
++ "/d-......omy:...-ys.    ```yh:::--...........-/sys/.`         `+y+-.................................\n"
++ " sh-.....-:+:` ``oy.`    `.hs.......```````      .sdo-`         .sd:           `````````````...`````\n"
++ " `ho---..-ysh`   /h.`    `.+o/```                 /d+yo:``        -yy+++:`                          \n"
++ "  .oyyyhyyNNo    /m-.``      .//+s/`             /d+..:oso/.```     -+:-/sy/                        \n"
++ ".......-:::.``...+N+::..````  `:o:m+`......`````sy-......:yds/-.```    `/s:y-``````````````````     \n"
++ "``````````````````/o++//+/////+ss+/.````````````:yysysssyysyyhosyo+++///+ms+-......```````````````  ";
+
+            Say(msg);
         }
 
         /**
@@ -197,12 +249,19 @@ namespace zoop
             this.polarBearEnergy += fish;
         }
 
-        public void ShowStatus()
+        public int GetNumberOfLivingPenguins()
         {
             int numberOfPinguins = 0;
-            if (IsPenguinOneAlive() ) numberOfPinguins++;
+            if (IsPenguinOneAlive()) numberOfPinguins++;
             if (IsPenguinTwoAlive()) numberOfPinguins++;
             if (IsPenguinThreeAlive()) numberOfPinguins++;
+
+            return numberOfPinguins;
+        }
+
+        public void ShowStatus()
+        {
+            int numberOfPinguins = GetNumberOfLivingPenguins();
 
             string penguinMsg = "";
 
@@ -223,8 +282,7 @@ namespace zoop
 
         public int GetNumber(int from, int to)
         {
-            var rand = new Random();
-            return rand.Next(from, to);
+            return this.rand.Next(from, to + 1);
         }
 
         public bool IsPolarBearStarving()
@@ -232,11 +290,43 @@ namespace zoop
             return this.polarBearEnergy <= polarBearStarvationEngergyThreshold;
         }
 
+        public bool AllAnimalsAreAlive()
+        {
+            bool allPenguinsAreAlive = GetNumberOfLivingPenguins() == 3;
+            bool polarBearIsAlive = this.polarBearEnergy > 0;
+
+            return allPenguinsAreAlive && polarBearIsAlive;
+        }
+
+        public bool IsGameWon()
+        {
+            return this.numberOfDaysLeft == 0 && AllAnimalsAreAlive();
+        }
+
+        public bool IsGameOver()
+        {
+            return this.numberOfDaysLeft == 0 && ! AllAnimalsAreAlive();
+        }
+
         /**
          * Each day, the animals consume energy
          */
         public void DayChange()
         {
+            this.numberOfDaysLeft -= 1;
+
+            if(IsGameWon())
+            {
+                ShowFullScreen();
+                return;
+            }
+
+            if(IsGameOver())
+            {
+                Say("You loose!! Try again.");
+                return;
+            }
+
             int penguinEnergyUsedForADay = 30;
             int polarBearEngergyUsedForADay = 300;
             
@@ -280,6 +370,11 @@ namespace zoop
                     // feed penguin command
                     case "feed polar bear":
                         zoo.FeedPolarBear();
+                        break;
+
+                    // help command
+                    case "help": case "?":
+                        zoo.ShowInstructions();
                         break;
 
                     // new day command
