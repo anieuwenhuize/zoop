@@ -4,11 +4,12 @@ namespace zoop
 {
     public class Program
     {
-        int penguinOneEngergy;
-        int penguinTwoEngergy;
-        int penguinThreeEngergy;
+        private int penguinOneEngergy;
+        private int penguinTwoEngergy;
+        private int penguinThreeEngergy;
 
-        int polarBearEnergy;
+        private int polarBearEnergy;
+        private const int polarBearStarvationEngergyThreshold = 150;
 
         public Program()
         {
@@ -20,10 +21,21 @@ namespace zoop
 
         public void ShowWelcome()
         {
-            string msg =  " *** WELCOME at the ***\n"
-                + "three PENGUINS\n" 
-                + "and a POLARBEAR\n"
-                + "ZOO";
+            string msg =  " ***  WELCOME at the  ***\n"
+                        + "   *  three PENGUINS  *\n" 
+                        + "   *  and a POLARBEAR *\n"
+                        + "   *      ZOO         *";
+
+            Say(msg);
+        }
+
+        public void ShowInstructions()
+        {
+            string msg = "You must feed the animals to keepup the zoo.\n"
+                + "Use 'new day' to advance to the next day"
+                + "Use 'feed penguin' to throw a fish to the penguins"
+                + "Take care that all penguins are fed"
+                + "Oh, and dont forget the polar bear.";
 
             Say(msg);
         }
@@ -178,6 +190,13 @@ namespace zoop
             }
         }
 
+        public void FeedPolarBear()
+        {
+            int fish = 50;
+
+            this.polarBearEnergy += fish;
+        }
+
         public void ShowStatus()
         {
             int numberOfPinguins = 0;
@@ -190,13 +209,13 @@ namespace zoop
             switch(numberOfPinguins)
             {
                 case 3:
-                    penguinMsg = "Three penguins"; break;
+                    penguinMsg = "Three penguins and a polar bear."; break;
                 case 2:
-                    penguinMsg = "Two penguins"; break;
+                    penguinMsg = "Two penguins and a polar bear."; break;
                 case 1:
-                    penguinMsg = "One penguin"; break;
+                    penguinMsg = "One penguin and a polar bear."; break;
                 case 0:
-                    penguinMsg = "No penguins"; break;
+                    penguinMsg = "Just a lonely dead? polar bear."; break;
             }
 
             Say(penguinMsg);
@@ -210,15 +229,13 @@ namespace zoop
 
         public bool IsPolarBearStarving()
         {
-            int starvationEngergyThreshold = 150;
-
-            return this.polarBearEnergy <= starvationEngergyThreshold;
+            return this.polarBearEnergy <= polarBearStarvationEngergyThreshold;
         }
 
         /**
          * Each day, the animals consume energy
          */
-        public void LiveALife()
+        public void DayChange()
         {
             int penguinEnergyUsedForADay = 30;
             int polarBearEngergyUsedForADay = 300;
@@ -260,9 +277,14 @@ namespace zoop
                         zoo.FeedPenguin();
                         break;
 
+                    // feed penguin command
+                    case "feed polar bear":
+                        zoo.FeedPolarBear();
+                        break;
+
                     // new day command
                     case "new day":
-                        zoo.LiveALife();
+                        zoo.DayChange();
                         zoo.ShowStatus();
                         break;
 
