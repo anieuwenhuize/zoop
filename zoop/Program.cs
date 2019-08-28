@@ -6,9 +6,9 @@ namespace zoop
     {
         private int numberOfDaysLeft;
 
-        private int penguinOneEngergy;
-        private int penguinTwoEngergy;
-        private int penguinThreeEngergy;
+        private int penguinOneEnergy;
+        private int penguinTwoEnergy;
+        private int penguinThreeEnergy;
 
         private int polarBearEnergy;
         private const int polarBearStarvationEngergyThreshold = 150;
@@ -19,9 +19,9 @@ namespace zoop
         {
             numberOfDaysLeft = 7;
 
-            penguinOneEngergy = 100;
-            penguinTwoEngergy = 100;
-            penguinThreeEngergy = 100;
+            penguinOneEnergy = 100;
+            penguinTwoEnergy = 100;
+            penguinThreeEnergy = 100;
             polarBearEnergy = 1000;
 
             this.rand = new Random();
@@ -60,17 +60,17 @@ namespace zoop
 
         public bool IsPenguinOneAlive()
         {
-            return this.penguinOneEngergy > 0;
+            return this.penguinOneEnergy > 0;
         }
 
         public bool IsPenguinTwoAlive()
         {
-            return this.penguinTwoEngergy > 0;
+            return this.penguinTwoEnergy > 0;
         }
 
         public bool IsPenguinThreeAlive()
         {
-            return this.penguinThreeEngergy > 0;
+            return this.penguinThreeEnergy > 0;
         }
 
         public bool IsPolarBearAlive()
@@ -80,19 +80,19 @@ namespace zoop
 
         public void FeedPenguinOne(int energy)
         {
-            this.penguinOneEngergy += energy;
+            this.penguinOneEnergy += energy;
             Say("Penguin 1 snatches a fish.");
         }
 
         public void FeedPenguinTwo(int energy)
         {
-            this.penguinTwoEngergy += energy;
+            this.penguinTwoEnergy += energy;
             Say("Penguin 2 snatches a fish.");
         }
 
         public void FeedPenguinThree(int energy)
         {
-            this.penguinThreeEngergy += energy;
+            this.penguinThreeEnergy += energy;
             Say("Penguin 3 snatches a fish.");
         }
 
@@ -104,24 +104,24 @@ namespace zoop
 
         public void PolarBearHuntsPenguinOne()
         {
-            this.polarBearEnergy += this.penguinOneEngergy;
-            this.penguinOneEngergy = 0;
+            this.polarBearEnergy += this.penguinOneEnergy;
+            this.penguinOneEnergy = 0;
 
             Say("The polar bear has eaten a penguin!");
         }
 
         public void PolarBearHuntsPenguinTwo()
         {
-            this.polarBearEnergy += this.penguinTwoEngergy;
-            this.penguinTwoEngergy = 0;
+            this.polarBearEnergy += this.penguinTwoEnergy;
+            this.penguinTwoEnergy = 0;
 
             Say("The polar bear has eaten a penguin!");
         }
 
         public void PolarBearHuntsPenguinThree()
         {
-            this.polarBearEnergy += this.penguinThreeEngergy;
-            this.penguinThreeEngergy = 0;
+            this.polarBearEnergy += this.penguinThreeEnergy;
+            this.penguinThreeEnergy = 0;
 
             Say("The polar bear has eaten a penguin!");
         }
@@ -336,16 +336,16 @@ namespace zoop
             int polarBearEngergyUsedForADay = 300;
             
 
-            this.penguinOneEngergy -= penguinEnergyUsedForADay;
-            this.penguinTwoEngergy -= penguinEnergyUsedForADay;
-            this.penguinThreeEngergy -= penguinEnergyUsedForADay;
+            this.penguinOneEnergy -= penguinEnergyUsedForADay;
+            this.penguinTwoEnergy -= penguinEnergyUsedForADay;
+            this.penguinThreeEnergy -= penguinEnergyUsedForADay;
 
             this.polarBearEnergy -= polarBearEngergyUsedForADay;
 
 
             if (IsPolarBearStarving()) PolarBearHunts();
 
-            Say(" *** A new day is comming. ***");
+            Say(" *** A new day is coming. ***");
         }
 
         public static void Main(string[] args)
@@ -372,7 +372,7 @@ namespace zoop
                         zoo.FeedPenguin();
                         break;
 
-                    // feed penguin command
+                    // feed polar bear command
                     case "feed polar bear":
                         zoo.FeedPolarBear();
                         break;
